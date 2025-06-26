@@ -6,6 +6,7 @@ pipeline {
             steps{
                 sh 'trivy fs . -o result.html'
                 sh 'cat result.html'
+                sh 'ls'
             }
         }
         stage('docker Image build') {
