@@ -9,18 +9,29 @@ pipeline {
                 sh 'ls '
             }
         }
+        stage('docker login') {
+            steps{
+                sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 890742578441.dkr.ecr.us-east-1.amazonaws.com'
+            }
+        }
         stage('docker Image build') {
             steps{
-                sh 'docker -v'
+                sh 'docker build -t qa-little-fashion .'
+            }
+        }
+        stage('docker tag') {
+            steps{
+                sh 'docker tag qa-little-fashion:$BUILD_ID 890742578441.dkr.ecr.us-east-1.amazonaws.com/qa-little-fashion:$BUILD_ID'
             }
         }
 
         stage('push image') {
             steps{
-                sh 'docker ps'
-                sh 'docker images'
+                sh 'docker push 890742578441.dkr.ecr.us-east-1.amazonaws.com/qa-little-fashion:$BUILD_ID'
+                
             }
         }
+        /*
         stage('clone') {
             steps{
                 sh 'echo "clone"'
@@ -38,6 +49,7 @@ pipeline {
                 sh 'touch text-$BUILD_ID'
             }
         }
+        */
              
     }
 }
