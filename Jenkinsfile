@@ -16,18 +16,18 @@ pipeline {
         }
         stage('docker Image build') {
             steps{
-                sh 'docker build -t qa-little-fashion:$BUILD_ID .'
+                sh 'docker build -t qa-little-fashion:test-$BUILD_ID .'
             }
         }
         stage('docker tag') {
             steps{
-                sh 'docker tag qa-little-fashion:$BUILD_ID 890742578441.dkr.ecr.us-east-1.amazonaws.com/qa-little-fashion:$BUILD_ID'
+                sh 'docker tag qa-little-fashion:$BUILD_ID 890742578441.dkr.ecr.us-east-1.amazonaws.com/qa-little-fashion:test-$BUILD_ID'
             }
         }
 
         stage('push image') {
             steps{
-                sh 'docker push 890742578441.dkr.ecr.us-east-1.amazonaws.com/qa-little-fashion:$BUILD_ID'
+                sh 'docker push 890742578441.dkr.ecr.us-east-1.amazonaws.com/qa-little-fashion:test-$BUILD_ID'
                 
             }
         }
