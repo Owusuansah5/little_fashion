@@ -18,7 +18,7 @@ pipeline {
         stage('push image') {
             steps{
                 sh 'docker ps'
-                sh 'docker image'
+                sh 'docker images'
             }
         }
         stage('clone') {
